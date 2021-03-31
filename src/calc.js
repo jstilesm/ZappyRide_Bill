@@ -1,7 +1,4 @@
-function calc(rate, miles, data) {
-  let ammount_saved = 0;
-  let plan = "";
-
+function calc(rate, miles, start, end, data) {
   // B1
   // take all column values of the csv "Electric-Faculty" and multiply it by this.state.rate
 
@@ -18,7 +15,9 @@ function calc(rate, miles, data) {
   let A_cost = 0.15;
   let A_total = 0;
   for (let i = 0; i < data.length; i++) {
-    A_total += data[i][1] * A_cost;
+    if (data[i][0] >= start && data[i][0] <= end) {
+      A_total += data[i][1] * A_cost;
+    }
   }
 
   // ----- rate B --------
@@ -30,10 +29,12 @@ function calc(rate, miles, data) {
 
   let B_total = 0;
   for (let i = 0; i < data.length; i++) {
-    if (data[i][0] <= 18 && data[i][1] >= 12) {
-      B_total += data[i][1] * B_cost_first;
-    } else {
-      B_total += data[i][1] * B_cost_rest;
+    if (data[i][0] >= start && data[i][0] <= end) {
+      if (data[i][0] <= 18 && data[i][0] >= 12) {
+        B_total += data[i][1] * B_cost_first;
+      } else {
+        B_total += data[i][1] * B_cost_rest;
+      }
     }
   }
   B_total += 0.3 * miles;
