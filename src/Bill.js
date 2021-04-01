@@ -1,6 +1,7 @@
 import React from "react";
 import calc from "./calc";
 import parse from "csv-parse/lib/sync";
+import FormInput from "./FormInput";
 
 // const parse = require("csv-parse/lib/sync");
 
@@ -17,7 +18,7 @@ class Bill extends React.Component {
       csv: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleResetClick = this.handleResetClick(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
   }
   async componentDidMount() {
     const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
@@ -52,11 +53,11 @@ class Bill extends React.Component {
     this.setState({ cost: cost, message: message });
   }
   handleResetClick(e) {
-    // e.preventDefault();
     this.setState({ cost: "", message: "" });
   }
 
   render() {
+    console.log(this.state);
     const { rate, miles, start, end, message, cost } = this.state;
 
     if (this.state.csv === null) {
@@ -64,47 +65,38 @@ class Bill extends React.Component {
     }
     if (this.state.cost === "" && this.state.message === "") {
       return (
-        <div className="whole-page">
+        <div>
           <h2>Find the best EV rate for you.</h2>
           <h3>Enter your Information below </h3>
           <form onSubmit={this.handleSubmit}>
             <div className="information-box">
-              <label className="labels">Your Current Rate ($/kWh):</label>
-              <input
-                className="inputs"
+              <FormInput
+                label="Your Current Rate ($/kWh):"
                 type="number"
-                // value={rate}
+                value={rate}
                 step=".01"
                 onChange={this.update("rate")}
               />
-              <br></br>
-              <label className="labels">
-                Miles Your Plan to Drive in a Year:
-              </label>
-              <input
-                className="inputs"
+              <FormInput
+                label="Miles Your Plan to Drive in a Year:"
                 type="number"
-                // value={miles}
+                value={miles}
                 onChange={this.update("miles")}
               />
-              <br></br>
+
               <label className="labels">
                 Range of Hours You Plan to Charge:
               </label>
               {/* 0-24 */}
               <div>
-                <input
-                  className="inputs"
+                <FormInput
                   type="number"
                   value={start}
                   onChange={this.update("start")}
-                  // placeholder="start"
                 />
-                <input
-                  className="inputs"
+                <FormInput
                   type="number"
                   value={end}
-                  // placeholder="end"
                   onChange={this.update("end")}
                 />
               </div>
@@ -131,7 +123,7 @@ class Bill extends React.Component {
           <div className="savings-box">
             <div className="message">{message}</div>
 
-            <div className>You Can Save: ${cost}</div>
+            <div>You Can Save: ${cost}</div>
           </div>
           <button onClick={this.handleResetClick} className="button">
             Try Another Rate

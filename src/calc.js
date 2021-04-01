@@ -1,4 +1,4 @@
-function calc(rate, miles, start, end, data) {
+export default function calc(rate, miles, start, end, data) {
   // B1
   // take all column values of the csv "Electric-Faculty" and multiply it by this.state.rate
 
@@ -40,7 +40,7 @@ function calc(rate, miles, start, end, data) {
   B_total += 0.3 * miles;
   A_total += 0.3 * miles;
 
-  // Round to to decimal places
+  // Round to two decimal places
   A_total = A_total.toFixed(2);
   B1 = B1.toFixed(2);
   B_total = B_total.toFixed(2);
@@ -53,5 +53,3 @@ function calc(rate, miles, start, end, data) {
     return [B1 - B_total, "Plan B is best"];
   }
 }
-
-export default calc;
