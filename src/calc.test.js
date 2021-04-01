@@ -8,8 +8,8 @@ const data = [
   [13, 1.11969897471791],
 ];
 test("Test Basic information", () => {
-  const [cost, message] = calc(0.5, 1231, data);
-  expect(cost).toBe(1);
+  const [cost, message] = calc(0, 0, data);
+  expect(cost).toBe(0);
 });
 test("Test 2 Basic information", () => {
   const [cost, message] = calc(0.6, 24322234, data);

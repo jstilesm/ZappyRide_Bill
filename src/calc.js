@@ -4,6 +4,7 @@ function calc(rate, miles, start, end, data) {
 
   // save added up value of entire column, save as total_usage
   let total_usage = 0;
+
   for (let i = 0; i < data.length; i++) {
     total_usage += data[i][1];
   }

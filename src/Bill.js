@@ -1,6 +1,7 @@
 import React from "react";
 import calc from "./calc";
 import parse from "csv-parse/lib/sync";
+
 // const parse = require("csv-parse/lib/sync");
 
 class Bill extends React.Component {
@@ -58,34 +59,76 @@ class Bill extends React.Component {
     );
 
     this.setState({ cost: cost, message: message });
+    console.log(this.state.cost);
   }
 
   render() {
-    console.log(this.state.message);
+    const { rate, miles, start, end, message, cost } = this.state;
+    // console.log(this.state.message);
     if (this.state.csv === null) {
       return <div>Loading...</div>;
     }
-    const { rate, miles, start, end, message, cost } = this.state;
-    return (
-      <div className="whole-page">
-        <form onSubmit={this.handleSubmit}>
-          <label>Rate:</label>
-          <input type="number" value={rate} onChange={this.update("rate")} />
+    if (this.state.cost === "" && this.state.message === "") {
+      return (
+        <div className="whole-page">
+          <h2>Find the best EV rate for you.</h2>
+          <h3>Enter your Information below </h3>
+          <form onSubmit={this.handleSubmit}>
+            <div className="information-box">
+              <label className="labels">Your Current Rate:</label>
+              <input
+                className="inputs"
+                type="number"
+                // value={rate}
+                onChange={this.update("rate")}
+              />
+              <br></br>
+              <label className="labels">
+                Miles Your Plan to Drive in a Year:
+              </label>
+              <input
+                className="inputs"
+                type="number"
+                // value={miles}
+                onChange={this.update("miles")}
+              />
+              <br></br>
+              <label className="labels">
+                Range of Hours You Plan to Charge:
+              </label>
+              {/* 0-24 */}
+              <div>
+                <input
+                  className="inputs"
+                  type="number"
+                  value={start}
+                  onChange={this.update("start")}
+                  // placeholder="start"
+                />
+                <input
+                  className="inputs"
+                  type="number"
+                  value={end}
+                  // placeholder="end"
+                  onChange={this.update("end")}
+                />
+              </div>
+            </div>
 
-          <label>Miles Driven:</label>
-          <input type="number" value={miles} onChange={this.update("miles")} />
-
-          <label>Range of Hours:</label>
-          {/* 0-24 */}
-          <input type="text" value={start} onChange={this.update("start")} />
-          <input type="text" value={end} onChange={this.update("end")} />
-
-          <button type="submit">Check your Impact</button>
-        </form>
-        <div>What Plan Should You Use?{message}</div>
-        <div>How Much Will You Save?{cost}</div>
-      </div>
-    );
+            <button className="button" type="submit">
+              Check your Impact
+            </button>
+          </form>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div>What Plan Should You Use?{message}</div>
+          <div>How Much Will You Save?{cost}</div>
+        </div>
+      );
+    }
   }
 }
 
