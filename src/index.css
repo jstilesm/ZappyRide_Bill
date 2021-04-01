@@ -12,6 +12,9 @@ code {
     monospace;
 }
 
+.whole.page {
+  font-family: "Merriweather", serif;
+}
 .button {
   margin-top: 10px;
   background-color: darkblue;

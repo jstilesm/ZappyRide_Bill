@@ -40,8 +40,8 @@ class Bill extends React.Component {
     return (e) => this.setState({ [field]: e.currentTarget.value });
   }
 
-  handleSubmit() {
-    // e.preventDefault();
+  handleSubmit(e) {
+    e.preventDefault();
     // create a 2 value matrix containing the hour and the column vvalues of Electric:Facility
     // let data = [
     //   [1, 0.925935588795078],
@@ -55,7 +55,7 @@ class Bill extends React.Component {
       this.state.miles,
       this.state.start,
       this.state.end,
-      this.state.information
+      this.state.csv
     );
 
     this.setState({ cost: cost, message: message });
@@ -75,11 +75,12 @@ class Bill extends React.Component {
           <h3>Enter your Information below </h3>
           <form onSubmit={this.handleSubmit}>
             <div className="information-box">
-              <label className="labels">Your Current Rate:</label>
+              <label className="labels">Your Current Rate ($/kWh):</label>
               <input
                 className="inputs"
                 type="number"
                 // value={rate}
+                step=".01"
                 onChange={this.update("rate")}
               />
               <br></br>
