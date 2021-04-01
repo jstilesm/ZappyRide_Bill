@@ -61,10 +61,11 @@ class Bill extends React.Component {
   }
 
   render() {
+    console.log(this.state.message);
     if (this.state.csv === null) {
       return <div>Loading...</div>;
     }
-    const { rate, miles, start, end, change, bill } = this.state;
+    const { rate, miles, start, end, message, cost } = this.state;
     return (
       <div className="whole-page">
         <form onSubmit={this.handleSubmit}>
@@ -81,8 +82,8 @@ class Bill extends React.Component {
 
           <button type="submit">Check your Impact</button>
         </form>
-        <div>What Plan Should You Use?{change}</div>
-        <div>How Much Will You Save?{bill}</div>
+        <div>What Plan Should You Use?{message}</div>
+        <div>How Much Will You Save?{cost}</div>
       </div>
     );
   }
