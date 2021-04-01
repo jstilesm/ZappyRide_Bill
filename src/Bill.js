@@ -2,6 +2,7 @@ import React from "react";
 import calc from "./calc";
 import parse from "csv-parse/lib/sync";
 import FormInput from "./FormInput";
+import { throwStatement } from "@babel/types";
 
 // const parse = require("csv-parse/lib/sync");
 
@@ -56,6 +57,13 @@ class Bill extends React.Component {
     this.setState({ cost: "", message: "" });
   }
 
+  formatCurrency(number) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(number);
+  }
+
   render() {
     console.log(this.state);
     const { rate, miles, start, end, message, cost } = this.state;
@@ -108,29 +116,20 @@ class Bill extends React.Component {
           </form>
         </div>
       );
-    } else if (this.state.cost === 0) {
-      return (
+    }
+    return (
+      <div>
         <div className="savings-box">
           <div className="message">{message}</div>
-          <button onClick={this.handleResetClick} className="button">
-            Try Another Rate
-          </button>
+          {this.state.cost !== 0 && (
+            <div>You Can Save: {this.formatCurrency(cost)}</div>
+          )}
         </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="savings-box">
-            <div className="message">{message}</div>
-
-            <div>You Can Save: ${cost}</div>
-          </div>
-          <button onClick={this.handleResetClick} className="button">
-            Try Another Rate
-          </button>
-        </div>
-      );
-    }
+        <button onClick={this.handleResetClick} className="button">
+          Try Another Rate
+        </button>
+      </div>
+    );
   }
 }
 
