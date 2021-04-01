@@ -40,6 +40,11 @@ function calc(rate, miles, start, end, data) {
   B_total += 0.3 * miles;
   A_total += 0.3 * miles;
 
+  // Round to to decimal places
+  A_total = A_total.toFixed(2);
+  B1 = B1.toFixed(2);
+  B_total = B_total.toFixed(2);
+
   if (B1 < A_total && B1 < B_total) {
     return [0, "Stay with your current plan"];
   } else if (A_total < B_total) {

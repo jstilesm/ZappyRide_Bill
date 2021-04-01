@@ -50,3 +50,20 @@ code {
   border-radius: 4px;
   margin-top: 10px;
 }
+
+.savings-box {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  color: black;
+  background-color: orange;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 40px;
+}
+
+.message {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

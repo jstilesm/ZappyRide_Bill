@@ -17,7 +17,7 @@ class Bill extends React.Component {
       csv: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.csvdata = null;
+    this.handleResetClick = this.handleResetClick(this);
   }
   async componentDidMount() {
     const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
@@ -32,7 +32,6 @@ class Bill extends React.Component {
       let power = data[i][1];
       information.push([parseInt(hour.slice(8, 10)), parseFloat(power)]);
     }
-    // console.log(information);
     this.setState({ csv: information });
   }
 
@@ -42,14 +41,6 @@ class Bill extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // create a 2 value matrix containing the hour and the column vvalues of Electric:Facility
-    // let data = [
-    //   [1, 0.925935588795078],
-    //   [2, 0.798768278439017],
-    //   [3, 0.753579623111327],
-    //   [12, 1.15098689093821],
-    //   [13, 1.11969897471791],
-    // ];
     const [cost, message] = calc(
       this.state.rate,
       this.state.miles,
@@ -59,12 +50,15 @@ class Bill extends React.Component {
     );
 
     this.setState({ cost: cost, message: message });
-    console.log(this.state.cost);
+  }
+  handleResetClick(e) {
+    // e.preventDefault();
+    this.setState({ cost: "", message: "" });
   }
 
   render() {
     const { rate, miles, start, end, message, cost } = this.state;
-    // console.log(this.state.message);
+
     if (this.state.csv === null) {
       return <div>Loading...</div>;
     }
@@ -122,11 +116,26 @@ class Bill extends React.Component {
           </form>
         </div>
       );
+    } else if (this.state.cost === 0) {
+      return (
+        <div className="savings-box">
+          <div className="message">{message}</div>
+          <button onClick={this.handleResetClick} className="button">
+            Try Another Rate
+          </button>
+        </div>
+      );
     } else {
       return (
         <div>
-          <div>What Plan Should You Use?{message}</div>
-          <div>How Much Will You Save?{cost}</div>
+          <div className="savings-box">
+            <div className="message">{message}</div>
+
+            <div className>You Can Save: ${cost}</div>
+          </div>
+          <button onClick={this.handleResetClick} className="button">
+            Try Another Rate
+          </button>
         </div>
       );
     }
