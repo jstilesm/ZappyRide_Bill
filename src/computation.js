@@ -1,3 +1,5 @@
+// Transform's our csv into a useable array
+
 export function transform_csv(data) {
   let information = [];
   for (let i = 0; i < data.length; i++) {
@@ -7,65 +9,75 @@ export function transform_csv(data) {
   }
   return information;
 }
+
+// Our main function for calculating the impact of having an EV in Plan's A and B
+
 export function calc(rate, miles, start, end, data) {
-  // // B1
-  // // take all column values of the csv "Electric-Faculty" and multiply it by this.state.rate
-
-  // // save added up value of entire column, save as total_usage
-  // let total_usage = 0;
-  // for (let i = 0; i < data.length; i++) {
-  //   total_usage += data[i][1];
-  // }
-  // let B1 = total_usage * rate;
-
   // ----- rate A --------
 
-  // A rate
   let A_cost = 0.15;
 
-  let A_total = 0;
+  let A_rate_B1 = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i][0] >= start && data[i][0] <= end) {
-      A_total += data[i][1] * A_cost;
+      A_rate_B1 += data[i][1] * A_cost;
     }
   }
-
   // ----- rate B --------
 
   // B rate from 12-18
-  let B_cost_first = 0.2;
+  let B_cost_range = 0.2;
   // B rate otherwise
   let B_cost_rest = 0.08;
 
-  let B_total = 0;
+  let B_rate_B1 = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i][0] >= start && data[i][0] <= end) {
       if (data[i][0] < 18 && data[i][0] >= 12) {
-        B_total += data[i][1] * B_cost_first;
+        B_rate_B1 += data[i][1] * B_cost_range;
       } else {
-        B_total += data[i][1] * B_cost_rest;
+        B_rate_B1 += data[i][1] * B_cost_rest;
       }
     }
   }
-  // Add up home profile and EV load profile
-  A_total += 0.3 * miles;
-  B_total += 0.3 * miles;
+  // Add up the EV load profile
+  const EV_load_profile = 0.3 * miles;
+
+  // compute EV cost for Plan B based on hours the user plans to charge
+  let EV_load_profile_piece = EV_load_profile / (end - start);
+  let B_EV_load_profile_cost = 0;
+  for (let i = start; i < end; i++) {
+    if (i >= 12 && i < 18) {
+      B_EV_load_profile_cost += EV_load_profile_piece * B_cost_range;
+    } else {
+      B_EV_load_profile_cost += EV_load_profile_piece * B_cost_rest;
+    }
+  }
+  // Set the current_plan cost value as our B1
+  let B1 = 0;
+  if (rate === "A") {
+    B1 = A_rate_B1;
+  } else {
+    B1 = B_rate_B1;
+  }
+
+  // B2 - B1
+  let A_Impact = A_rate_B1 + EV_load_profile * A_cost - B1;
+
+  let B_Impact = B_rate_B1 + B_EV_load_profile_cost - B1;
 
   if (rate === "A") {
-    // Add up home profile and EV load profile
-
-    if (A_total < B_total) {
+    if (A_Impact < B_Impact) {
       return [0, "Stay with your current plan, Plan A"];
     } else {
-      return [A_total - B_total, "Plan B is best for you"];
+      return [A_Impact - B_Impact, "Plan B is best for you"];
     }
   }
   if (rate === "B") {
-    // Add up home profile and EV load profile
-    if (B_total < A_total) {
+    if (B_Impact < A_Impact) {
       return [0, "Stay with your current plan, Plan B"];
     } else {
-      return [B_total - A_total, "Plan B is best for you"];
+      return [B_Impact - A_Impact, "Plan A is best for you"];
     }
   }
 }

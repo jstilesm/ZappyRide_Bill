@@ -8,7 +8,7 @@ class Bill extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rate: "",
+      rate: "A",
       miles: 0,
       start: 0,
       end: 24,
@@ -79,12 +79,12 @@ class Bill extends React.Component {
         <div>
           <div className="center title-text">
             <h2 className="title-header">Find the best EV rate for you</h2>
-            <h3 className="title-header">Enter your Information below </h3>
+            <h3 className="title-header">Enter your information below </h3>
           </div>
           <div className="information-box">
             <form onSubmit={this.handleSubmit}>
               <Grid>
-                <div>Your Current Rate: {rate}</div>
+                <div>Your current rate: {rate}</div>
                 <Grid.Row>
                   <Grid.Column>
                     <button
@@ -108,7 +108,7 @@ class Bill extends React.Component {
                 <Grid.Row>
                   <Grid.Column>
                     <FormInput
-                      label="Miles Your Plan to Drive in a Year:"
+                      label="Miles You Plan to Drive in a Year:"
                       type="number"
                       min="0"
                       value={miles}
@@ -118,7 +118,7 @@ class Bill extends React.Component {
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column>
-                    <label>Range of Hours You Plan to Charge:</label>
+                    <label>Range of hours you plan to charge your EV:</label>
                   </Grid.Column>
                 </Grid.Row>
 
@@ -145,7 +145,7 @@ class Bill extends React.Component {
                 </Grid.Row>
 
                 <button className="button" type="submit">
-                  Check your Impact
+                  Check Your Impact
                 </button>
               </Grid>
             </form>
@@ -158,7 +158,7 @@ class Bill extends React.Component {
         <div className="savings-box">
           <div className="message">{message}</div>
           {this.state.cost !== 0 && (
-            <div>You Can Save: {this.formatCurrency(cost)}</div>
+            <div>If you switch you can save: {this.formatCurrency(cost)}</div>
           )}
         </div>
         <button onClick={this.handleResetClick} className="button">
