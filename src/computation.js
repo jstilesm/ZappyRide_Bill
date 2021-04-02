@@ -55,17 +55,17 @@ export function calc(rate, miles, start, end, data) {
     // Add up home profile and EV load profile
 
     if (A_total < B_total) {
-      return [0, "Stay with your current plan"];
+      return [0, "Stay with your current plan, Plan A"];
     } else {
-      return [A_total - B_total, "Plan B is best"];
+      return [A_total - B_total, "Plan B is best for you"];
     }
   }
   if (rate === "B") {
     // Add up home profile and EV load profile
     if (B_total < A_total) {
-      return [0, "Stay with your current plan"];
+      return [0, "Stay with your current plan, Plan B"];
     } else {
-      return [B_total - A_total, "Plan B is best"];
+      return [B_total - A_total, "Plan B is best for you"];
     }
   }
 }
