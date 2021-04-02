@@ -6,6 +6,7 @@ export default function FormInput(props) {
         className="input"
         type={props.type}
         min={props.min}
+        max={props.max}
         value={props.value}
         step={props.step}
         onChange={props.onChange}

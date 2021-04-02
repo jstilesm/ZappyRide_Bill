@@ -2,9 +2,7 @@ import React from "react";
 import calc from "./calc";
 import parse from "csv-parse/lib/sync";
 import FormInput from "./FormInput";
-import { throwStatement } from "@babel/types";
-
-// const parse = require("csv-parse/lib/sync");
+import Grid from "./Grid";
 
 class Bill extends React.Component {
   constructor(props) {
@@ -38,6 +36,11 @@ class Bill extends React.Component {
   }
 
   update(field) {
+    if (field === "start" || field === "end") {
+      if (this.state.start < this.state.end) {
+        return (e) => this.setState({ [field]: e.currentTarget.value });
+      }
+    }
     return (e) => this.setState({ [field]: e.currentTarget.value });
   }
 
@@ -74,55 +77,75 @@ class Bill extends React.Component {
     if (this.state.cost === "" && this.state.message === "") {
       return (
         <div>
-          <h2>Find the best EV rate for you.</h2>
-          <h3>Enter your Information below </h3>
-          <form onSubmit={this.handleSubmit}>
-            <div className="information-box">
-              <FormInput
-                label="Your Current Rate ($/kWh):"
-                type="number"
-                min="0"
-                value={rate}
-                step=".01"
-                onChange={this.update("rate")}
-              />
-              <FormInput
-                label="Miles Your Plan to Drive in a Year:"
-                type="number"
-                min="0"
-                value={miles}
-                onChange={this.update("miles")}
-              />
+          <div className="center title-text">
+            <h2>Find the best EV rate for you</h2>
+            <h3>Enter your Information below </h3>
+          </div>
+          <div className="information-box">
+            <form onSubmit={this.handleSubmit}>
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <FormInput
+                      label="Your Current Rate ($/kWh):"
+                      type="number"
+                      min="0"
+                      value={rate}
+                      step=".01"
+                      onChange={this.update("rate")}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column>
+                    <FormInput
+                      label="Miles Your Plan to Drive in a Year:"
+                      type="number"
+                      min="0"
+                      value={miles}
+                      onChange={this.update("miles")}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column>
+                    <label>Range of Hours You Plan to Charge:</label>
+                  </Grid.Column>
+                </Grid.Row>
 
-              <label className="label">
-                Range of Hours You Plan to Charge:
-              </label>
-              {/* 0-24 */}
-              <div>
-                <FormInput
-                  type="number"
-                  min="0"
-                  value={start}
-                  onChange={this.update("start")}
-                />
-                <FormInput
-                  type="number"
-                  min="0"
-                  value={end}
-                  onChange={this.update("end")}
-                />
-              </div>
-            </div>
+                {/* 0-24 */}
+                <Grid.Row>
+                  <Grid.Column>
+                    <FormInput
+                      type="number"
+                      min="0"
+                      max="24"
+                      value={start}
+                      onChange={this.update("start")}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <FormInput
+                      type="number"
+                      min="0"
+                      max="24"
+                      value={end}
+                      onChange={this.update("end")}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
 
-            <button className="button" type="submit">
-              Check your Impact
-            </button>
-          </form>
+                <button className="button" type="submit">
+                  Check your Impact
+                </button>
+              </Grid>
+            </form>
+          </div>
         </div>
       );
     }
     return (
-      <div>
+      <div className="center">
         <div className="savings-box">
           <div className="message">{message}</div>
           {this.state.cost !== 0 && (

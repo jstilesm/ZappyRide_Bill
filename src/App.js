@@ -4,9 +4,7 @@ import Bill from "./Bill.js";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Bill />
-      </header>
+      <Bill />
     </div>
   );
 }

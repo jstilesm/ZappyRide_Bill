@@ -1,0 +1,21 @@
+.grid,
+.grid__row {
+  display: flex;
+  width: 100%;
+}
+
+.grid {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.grid__column {
+  margin-top: 10px;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.grid__row {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}

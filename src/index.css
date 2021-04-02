@@ -6,6 +6,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.center {
+  text-align: center;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -35,20 +44,28 @@ code {
   background-color: orange;
   color: black;
   border-radius: 4px;
-  padding-bottom: 20px;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-.label {
-  margin-left: 10px;
+  padding: 20px;
 }
 
 .input {
-  margin-left: 10px;
-  width: 100px;
+  width: 100%;
   outline: none;
   border-radius: 4px;
-  margin-top: 10px;
+  box-shadow: 0 0 0 0 rgb(19 124 189 / 0%), 0 0 0 0 rgb(19 124 189 / 0%),
+    inset 0 0 0 1px rgb(16 22 26 / 15%), inset 0 1px 1px rgb(16 22 26 / 20%);
+  font-weight: 400;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  vertical-align: middle;
+  appearance: none;
+  background: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+.title-text {
+  padding-bottom: 20px;
 }
 
 .savings-box {
