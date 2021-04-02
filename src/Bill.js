@@ -1,5 +1,5 @@
 import React from "react";
-import calc from "./calc";
+import { calc, transform_csv } from "./computation";
 import parse from "csv-parse/lib/sync";
 import FormInput from "./FormInput";
 import Grid from "./Grid";
@@ -8,7 +8,7 @@ class Bill extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rate: 0,
+      rate: "",
       miles: 0,
       start: 0,
       end: 24,
@@ -18,6 +18,8 @@ class Bill extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
+    this.handleAClick = this.handleAClick.bind(this);
+    this.handleBClick = this.handleBClick.bind(this);
   }
   async componentDidMount() {
     const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
@@ -26,21 +28,18 @@ class Bill extends React.Component {
     const decoder = new TextDecoder("utf-8");
     const csv = decoder.decode(result.value);
     let data = parse(csv).slice(1);
-    let information = [];
-    for (let i = 0; i < data.length; i++) {
-      let hour = data[i][0];
-      let power = data[i][1];
-      information.push([parseInt(hour.slice(8, 10)), parseFloat(power)]);
-    }
+    const information = transform_csv(data);
     this.setState({ csv: information });
   }
 
   update(field) {
-    if (field === "start" || field === "end") {
-      if (this.state.start < this.state.end) {
-        return (e) => this.setState({ [field]: e.currentTarget.value });
-      }
+    if (field === "start" && this.state.start + 1 === this.state.end) {
+      return null;
     }
+    if (field === "end" && this.state.end - 1 === this.state.start) {
+      return null;
+    }
+
     return (e) => this.setState({ [field]: e.currentTarget.value });
   }
 
@@ -58,6 +57,13 @@ class Bill extends React.Component {
   }
   handleResetClick(e) {
     this.setState({ cost: "", message: "" });
+  }
+
+  handleAClick(e) {
+    this.setState({ rate: "A" });
+  }
+  handleBClick(e) {
+    this.setState({ rate: "B" });
   }
 
   formatCurrency(number) {
@@ -78,22 +84,31 @@ class Bill extends React.Component {
       return (
         <div>
           <div className="center title-text">
-            <h2>Find the best EV rate for you</h2>
-            <h3>Enter your Information below </h3>
+            <h2 className="title-header">Find the best EV rate for you</h2>
+            <h3 className="title-header">Enter your Information below </h3>
           </div>
           <div className="information-box">
             <form onSubmit={this.handleSubmit}>
               <Grid>
+                <div>Your Current Rate: {rate}</div>
                 <Grid.Row>
                   <Grid.Column>
-                    <FormInput
-                      label="Your Current Rate ($/kWh):"
-                      type="number"
-                      min="0"
-                      value={rate}
-                      step=".01"
-                      onChange={this.update("rate")}
-                    />
+                    <button
+                      type="button"
+                      onClick={this.handleAClick}
+                      className="button"
+                    >
+                      Rate A
+                    </button>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <button
+                      type="button"
+                      onClick={this.handleBClick}
+                      className="button"
+                    >
+                      Rate B
+                    </button>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>

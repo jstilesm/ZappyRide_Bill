@@ -11,7 +11,12 @@ body {
 *:after {
   box-sizing: border-box;
 }
-
+.title-header {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+}
+]
 .center {
   text-align: center;
 }
