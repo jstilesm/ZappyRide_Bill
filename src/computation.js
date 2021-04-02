@@ -47,10 +47,13 @@ export function calc(rate, miles, start, end, data) {
       }
     }
   }
+  // Add up home profile and EV load profile
+  A_total += 0.3 * miles;
+  B_total += 0.3 * miles;
 
   if (rate === "A") {
     // Add up home profile and EV load profile
-    B_total += 0.3 * miles;
+
     if (A_total < B_total) {
       return [0, "Stay with your current plan"];
     } else {
@@ -59,7 +62,6 @@ export function calc(rate, miles, start, end, data) {
   }
   if (rate === "B") {
     // Add up home profile and EV load profile
-    A_total += 0.3 * miles;
     if (B_total < A_total) {
       return [0, "Stay with your current plan"];
     } else {
