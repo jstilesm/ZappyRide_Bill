@@ -39,11 +39,11 @@ code {
   padding-top: 10px;
   padding-left: 10px;
 }
-.labels {
+.label {
   margin-left: 10px;
 }
 
-.inputs {
+.input {
   margin-left: 10px;
   width: 100px;
   outline: none;

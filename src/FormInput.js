@@ -3,8 +3,9 @@ export default function FormInput(props) {
     <>
       {props.label && <label className="labels">{props.label}</label>}
       <input
-        className="inputs"
+        className="input"
         type={props.type}
+        min={props.min}
         value={props.value}
         step={props.step}
         onChange={props.onChange}

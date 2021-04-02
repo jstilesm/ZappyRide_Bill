@@ -13,6 +13,7 @@ export default function calc(rate, miles, start, end, data) {
 
   // A rate
   let A_cost = 0.15;
+
   let A_total = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i][0] >= start && data[i][0] <= end) {
@@ -30,13 +31,14 @@ export default function calc(rate, miles, start, end, data) {
   let B_total = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i][0] >= start && data[i][0] <= end) {
-      if (data[i][0] <= 18 && data[i][0] >= 12) {
+      if (data[i][0] < 18 && data[i][0] >= 12) {
         B_total += data[i][1] * B_cost_first;
       } else {
         B_total += data[i][1] * B_cost_rest;
       }
     }
   }
+  // Add up home profile and EV load profile
   B_total += 0.3 * miles;
   A_total += 0.3 * miles;
 

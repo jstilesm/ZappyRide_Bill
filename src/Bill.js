@@ -81,6 +81,7 @@ class Bill extends React.Component {
               <FormInput
                 label="Your Current Rate ($/kWh):"
                 type="number"
+                min="0"
                 value={rate}
                 step=".01"
                 onChange={this.update("rate")}
@@ -88,22 +89,25 @@ class Bill extends React.Component {
               <FormInput
                 label="Miles Your Plan to Drive in a Year:"
                 type="number"
+                min="0"
                 value={miles}
                 onChange={this.update("miles")}
               />
 
-              <label className="labels">
+              <label className="label">
                 Range of Hours You Plan to Charge:
               </label>
               {/* 0-24 */}
               <div>
                 <FormInput
                   type="number"
+                  min="0"
                   value={start}
                   onChange={this.update("start")}
                 />
                 <FormInput
                   type="number"
+                  min="0"
                   value={end}
                   onChange={this.update("end")}
                 />
