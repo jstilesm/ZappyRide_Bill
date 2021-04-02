@@ -21,6 +21,8 @@ class Bill extends React.Component {
     this.handleAClick = this.handleAClick.bind(this);
     this.handleBClick = this.handleBClick.bind(this);
   }
+
+  // used async as opposed to chaining on a promise
   async componentDidMount() {
     const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
     const reader = response.body.getReader();
@@ -67,7 +69,6 @@ class Bill extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const { rate, miles, start, end, message, cost } = this.state;
 
     if (this.state.csv === null) {
