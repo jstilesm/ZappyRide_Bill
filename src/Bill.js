@@ -33,13 +33,6 @@ class Bill extends React.Component {
   }
 
   update(field) {
-    if (field === "start" && this.state.start + 1 === this.state.end) {
-      return null;
-    }
-    if (field === "end" && this.state.end - 1 === this.state.start) {
-      return null;
-    }
-
     return (e) => this.setState({ [field]: e.currentTarget.value });
   }
 
