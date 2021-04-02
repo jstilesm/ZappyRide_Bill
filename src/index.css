@@ -85,7 +85,10 @@ code {
 }
 
 .message {
-  font-weight: bold;
+  font-weight: 700;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.subtext {
+  font-size: 12px;
 }

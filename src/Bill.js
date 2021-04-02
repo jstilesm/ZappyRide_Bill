@@ -107,6 +107,17 @@ class Bill extends React.Component {
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column>
+                    <div className="subtext">Rate A is a flat $0.15/kWh</div>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <div className="subtext">
+                      Rate B is a time-of-use rate of $0.20/kWh between noon and
+                      6pm, and $0.08/kWh otherwise
+                    </div>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column>
                     <FormInput
                       label="Miles You Plan to Drive in a Year:"
                       type="number"
@@ -121,7 +132,6 @@ class Bill extends React.Component {
                     <label>Range of hours you plan to charge your EV:</label>
                   </Grid.Column>
                 </Grid.Row>
-
                 {/* 0-24 */}
                 <Grid.Row>
                   <Grid.Column>
