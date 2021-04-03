@@ -167,10 +167,18 @@ class Bill extends React.Component {
       <div className="center">
         <div className="savings-box">
           <div className="message">{message}</div>
-          {this.state.cost !== 0 && (
+
+          {this.state.message.slice(-3) === "you" && (
             <div>If you switch you can save: {this.formatCurrency(cost)}</div>
           )}
+          {this.state.message.slice(-3) !== "you" && (
+            <div>
+              Having an electronic vechicle adds {this.formatCurrency(cost)} to
+              your Bill
+            </div>
+          )}
         </div>
+
         <button onClick={this.handleResetClick} className="button">
           Try Another Rate
         </button>

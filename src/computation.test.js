@@ -26,7 +26,7 @@ test("Cost to be 0", () => {
 });
 test("Stay with Current Plan", () => {
   const [cost, message] = calc("B", 2000, 0, 24, data);
-  expect(cost).toBe(0);
+  expect(cost).toBe(66);
   expect(message).toBe("Stay with your current plan, Plan B");
 });
 test("Plan A is Best", () => {

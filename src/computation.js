@@ -68,14 +68,14 @@ export function calc(rate, miles, start, end, data) {
 
   if (rate === "A") {
     if (A_Impact < B_Impact) {
-      return [0, "Stay with your current plan, Plan A"];
+      return [A_Impact, "Stay with your current plan, Plan A"];
     } else {
       return [A_Impact - B_Impact, "Plan B is best for you"];
     }
   }
   if (rate === "B") {
     if (B_Impact < A_Impact) {
-      return [0, "Stay with your current plan, Plan B"];
+      return [B_Impact, "Stay with your current plan, Plan B"];
     } else {
       return [B_Impact - A_Impact, "Plan A is best for you"];
     }
