@@ -119,7 +119,7 @@ class Bill extends React.Component {
                 <Grid.Row>
                   <Grid.Column>
                     <FormInput
-                      label="Miles You Plan to Drive in a Year:"
+                      label="Miles you plan to drive in a year:"
                       type="number"
                       min="0"
                       value={miles}
