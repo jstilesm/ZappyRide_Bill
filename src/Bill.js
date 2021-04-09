@@ -1,6 +1,6 @@
 import React from "react";
 import { calc, transform_csv } from "./computation";
-import parse from "csv-parse/lib/sync";
+// import parse from "csv-parse/lib/sync";
 import FormInput from "./FormInput";
 import Grid from "./Grid";
 
@@ -20,18 +20,24 @@ class Bill extends React.Component {
     this.handleResetClick = this.handleResetClick.bind(this);
     this.handleAClick = this.handleAClick.bind(this);
     this.handleBClick = this.handleBClick.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   // used async as opposed to chaining on a promise
-  async componentDidMount() {
-    const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
-    const reader = response.body.getReader();
-    const result = await reader.read();
-    const decoder = new TextDecoder("utf-8");
-    const csv = decoder.decode(result.value);
-    let data = parse(csv).slice(1);
-    const information = transform_csv(data);
-    this.setState({ csv: information });
+  // const delay = ms => new Promise(res => setTimeout(res, ms));
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  async fetchData() {
+    try {
+      const response = await fetch("/USA_NY_Buffalo.725280_TMY2.csv");
+      const hi = response.text();
+      const information = transform_csv(hi);
+      this.setState({ csv: information });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   update(field) {

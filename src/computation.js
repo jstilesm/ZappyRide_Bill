@@ -19,6 +19,7 @@ export function calc(rate, miles, start, end, data) {
 
   let A_rate_B1 = 0;
   for (let i = 0; i < data.length; i++) {
+    // mistake, should be independent of time because time range is only for charging the EV
     if (data[i][0] >= start && data[i][0] <= end) {
       A_rate_B1 += data[i][1] * A_cost;
     }
